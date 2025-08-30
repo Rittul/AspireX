@@ -91,4 +91,18 @@ export async function fetchSiteStatus() {
   return response.json();
 }
 
+export async function fetchEvents(params = {}) {
+  const query = new URLSearchParams(params).toString();
+  const url = query ? `${API_BASE_URL}/events/?${query}` : `${API_BASE_URL}/events/`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error('Failed to fetch events');
+  return res.json();
+}
+
+export async function createEvent(payload) {
+  // Requires mentor or admin token (auto attached by interceptor if using API.post)
+  const res = await API.post('events/', payload);
+  return res.data;
+}
+
 export default API;

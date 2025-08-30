@@ -63,9 +63,9 @@ const ServicesNavbar = () => {
         {isAuthenticated && (
           <ul className="services-navbar-links">
             <li onClick={() => {navigate('/services/share'); setMobileMenuOpen(false);}}>Share</li>
-            <li onClick={() => {navigate('/services/problems'); setMobileMenuOpen(false);}}>Problems</li>
-            <li onClick={() => {navigate('/services/hackathons'); setMobileMenuOpen(false);}}>Hackathons</li>
-            <li onClick={() => {navigate('/services/events'); setMobileMenuOpen(false);}}>Events</li>
+            
+            <li onClick={() => {navigate('/events'); setMobileMenuOpen(false);}}>Events</li>
+
           </ul>
         )}
         <div className="services-navbar-profile">

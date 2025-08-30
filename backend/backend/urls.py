@@ -36,6 +36,7 @@ from django.conf import settings
 
 from chat.models import NewsletterSubscriber
 from chat.models import SiteStatus
+router = DefaultRouter()
 
 def aspirex_world(request):
     return HttpResponse('AspireX World')
@@ -87,8 +88,10 @@ urlpatterns = [
     path('api/mentor/', include('mentor.urls')),
     path('api/chat/', include('chat.urls')),
     path('api/community/', include('community.urls')),
+    path('api/events/', include('events.urls')),
     path('api/test-cors/', test_cors, name='test-cors'),
     path('api/platform-stats/', platform_stats, name='platform-stats'),
     path('api/newsletter/', newsletter_subscribe, name='newsletter-subscribe'),
     path('api/site-status/', site_status, name='site-status'),
+    path('api/', include(router.urls)),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

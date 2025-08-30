@@ -83,6 +83,7 @@ import API from "../../BackendConn/api";
 import Loader from '../../components/ui/loader';
 import Modal from '../../components/ui/Modal';
 import CommunityFeed from '../../components/CommunityFeed';
+import EventsForm from './EventsForm';
 
 const Dashboard = () => {
 
@@ -218,6 +219,8 @@ const Dashboard = () => {
         return <ProfilePage mentorProfile={mentor} onProfileUpdate={fetchMentorProfile} />;
       case 'sessions':
         return <SessionsPage sessions={mentor.meetings || []} />;
+      case 'events':
+        return <EventsForm />;
       case 'feedback':
         return <FeedbackPage />;
       case 'customerService':

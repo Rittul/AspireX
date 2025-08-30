@@ -59,7 +59,8 @@ function UnifiedSignup() {
         name: form.name,
         email: form.email,
         password: form.password,
-        role: form.role
+        role: form.role,
+        accepted_terms: true
       };
 
       const res = await API.post(endpoint, requestData);
@@ -70,11 +71,60 @@ function UnifiedSignup() {
       alert('Registration successful! Please check your email for login credentials.');
       navigate(`/${form.role}/dashboard`);
     } catch (err) {
-      setError(err.response?.data?.message || err.response?.data?.error || 'Registration failed. Please try again.');
+      const data = err.response?.data;
+      let msg = 'Registration failed. Please try again.';
+      if (data) {
+        if (typeof data === 'string') {
+          msg = data;
+        } else if (data.detail) {
+          msg = data.detail;
+        } else if (data.message) {
+          msg = data.message;
+        } else if (data.error) {
+          msg = data.error;
+        } else {
+          try {
+            const parts = Object.entries(data).map(([k, v]) => {
+              if (Array.isArray(v)) return `${k}: ${v.join(', ')}`;
+              if (typeof v === 'string') return `${k}: ${v}`;
+              return `${k}: ${JSON.stringify(v)}`;
+            });
+            if (parts.length) msg = parts.join('\n');
+          } catch {}
+        }
+      }
+      setError(msg);
     } finally {
       setIsLoading(false);
     }
   };
+  const handleGoogleSignIn = useCallback(async (response) => {
+    if (!acceptedTerms) {
+      setError('You must accept the Terms & Conditions to register.');
+      return;
+    }
+
+    setIsGoogleLoading(true);
+    setError('');
+
+    try {
+      // Send the ID token to our unified auth backend
+      const result = await API.post('auth/google/verify/', {
+        id_token: response.credential,
+        user_type: form.role
+      });
+
+      // Use the auth context to login
+      login(result.data.user, result.data.token, result.data.user_type);
+      
+      alert('Google registration successful! Check your email for your credentials.');
+      navigate(`/${form.role}/dashboard`);
+    } catch (err) {
+      setError(err.response?.data?.error || 'Google authentication failed');
+    } finally {
+      setIsGoogleLoading(false);
+    }
+  }, [acceptedTerms, form.role, login, navigate]);
 
   // Initialize Google Sign-In
   useEffect(() => {
@@ -119,33 +169,7 @@ function UnifiedSignup() {
     };
   }, [handleGoogleSignIn]);
 
-  const handleGoogleSignIn = useCallback(async (response) => {
-    if (!acceptedTerms) {
-      setError('You must accept the Terms & Conditions to register.');
-      return;
-    }
-
-    setIsGoogleLoading(true);
-    setError('');
-
-    try {
-      // Send the ID token to our unified auth backend
-      const result = await API.post('auth/google/verify/', {
-        id_token: response.credential,
-        user_type: form.role
-      });
-
-      // Use the auth context to login
-      login(result.data.user, result.data.token, result.data.user_type);
-      
-      alert('Google registration successful! Check your email for your credentials.');
-      navigate(`/${form.role}/dashboard`);
-    } catch (err) {
-      setError(err.response?.data?.error || 'Google authentication failed');
-    } finally {
-      setIsGoogleLoading(false);
-    }
-  }, [acceptedTerms, form.role, login, navigate]);
+  
 
   return (
     <StyledPageWrapper>

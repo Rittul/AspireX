@@ -117,6 +117,9 @@ const Sidebar = ({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen, mentorP
             <li className={activeTab === 'sessions' ? 'active' : ''} onClick={() => setActiveTab('sessions')}>
               <span><FiCalendar /></span> {(!sidebarCollapsed && sidebarOpen) && 'Sessions'}
             </li>
+            <li className={activeTab === 'events' ? 'active' : ''} onClick={() => setActiveTab('events')}>
+              <span><FiCalendar /></span> {(!sidebarCollapsed && sidebarOpen) && 'Events'}
+            </li>
             <li className={activeTab === 'feedback' ? 'active' : ''} onClick={() => setActiveTab('feedback')}>
               <span><FiStar /></span> {(!sidebarCollapsed && sidebarOpen) && 'Feedback'}
             </li>

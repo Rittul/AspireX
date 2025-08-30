@@ -4,6 +4,7 @@ import './CSS/ServicesPage.css';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoMdClose } from 'react-icons/io';
 import Services from './services';
+import ServicesNavbar from './ServicesNavbar';
 
 const ServicesPage = () => {
   const navigate = useNavigate();
@@ -54,40 +55,7 @@ const ServicesPage = () => {
 
   return (
     <div className="services-root">
-      <nav className="services-navbar">
-        <div className="services-navbar-logo" onClick={() => navigate('/')}>AspireX</div>
-        {isMobile && (
-          <div className="services-hamburger" onClick={() => setMobileMenuOpen(open => !open)}>
-            {mobileMenuOpen ? <IoMdClose size={28} /> : <GiHamburgerMenu size={28} />}
-          </div>
-        )}
-        <div className={`services-navbar-menu${isMobile ? (mobileMenuOpen ? ' open' : '') : ''}`}> 
-          <ul className="services-navbar-links">
-            <li onClick={() => {navigate('/services/share'); setMobileMenuOpen(false);}}>Share</li>
-            <li onClick={() => {navigate('/services/problems'); setMobileMenuOpen(false);}}>Problems</li>
-            <li onClick={() => {navigate('/services/hackathons'); setMobileMenuOpen(false);}}>Hackathons</li>
-            <li onClick={() => {navigate('/services/events'); setMobileMenuOpen(false);}}>Events</li>
-          </ul>
-          <div className="services-navbar-profile">
-            <span
-              className="services-profile-avatar"
-              tabIndex={0}
-              onClick={() => setDropdownOpen(open => !open)}
-              onBlur={() => setTimeout(() => setDropdownOpen(false), 150)}
-            >
-              {profileInitials}
-            </span>
-            {dropdownOpen && (
-              <div className="services-dropdown-menu">
-                {isAuthenticated && (
-                  <button onClick={handleDashboardClick}>Dashboard</button>
-                )}
-                <button onClick={handleLogout}>Logout</button>
-              </div>
-            )}
-          </div>
-        </div>
-      </nav>
+      <ServicesNavbar />
       <div className="services-content">
         {/* <h1>Services</h1> */}
         {/* <p>Welcome to the Services page! Choose an option from the navbar above.</p> */}

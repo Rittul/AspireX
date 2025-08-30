@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './CSS/Services.css';
 
 const Services = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [hoveredService, setHoveredService] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -87,7 +89,7 @@ const Services = () => {
         </svg>
       ),
       features: ["Innovation Events", "Team Collaboration", "Networking"]
-    }
+    },
   ];
 
   const handleServiceHover = (index) => {

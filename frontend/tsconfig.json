@@ -1,8 +1,20 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
+    "target": "ES6",                  // or later like ES2017
+    "module": "ESNext",               // or "CommonJS" depending on your bundler
+    "lib": ["DOM", "ESNext"],         
+    "jsx": "react-jsx",               // for React 17+ JSX transform
+    "allowJs": true,                  // Allow compiling .js and .jsx files
+    "checkJs": false,                 // Don't type check JS files (optional)
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true                   // Usually no emit if using Babel or bundler to compile
+  },
+  "include": ["src/**/*"],            // Your source folder
+  "exclude": ["node_modules", "dist"]
 }

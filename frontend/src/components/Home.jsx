@@ -282,6 +282,9 @@ function Home() {
           <li><a href="#mentors" onClick={closeNav}>Mentors</a></li>
           <li><a href="#testimonials" onClick={closeNav}>Testimonials</a></li>
           <li><a href="/services" onClick={e => { e.preventDefault(); navigate('/services'); closeNav(); }}>Services</a></li>
+          {/* Removed Events from AspireX navbar */}
+          {/* <li><a href="/events" onClick={e => { e.preventDefault(); navigate('/events'); closeNav(); }}>Events</a></li> */}
+          
         </ul>
         <div className="nav-buttons">
           {/* Desktop-only login/signup or profile dropdown */}

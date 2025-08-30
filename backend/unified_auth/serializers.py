@@ -55,6 +55,7 @@ class UnifiedRegisterSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True, min_length=6)
     role = serializers.ChoiceField(choices=[('student', 'Student'), ('mentor', 'Mentor')])
+    accepted_terms = serializers.BooleanField(write_only=True, required=False, default=False)
     
     def validate_email(self, value):
         # Check if email already exists in either Student or Mentor models
@@ -66,13 +67,15 @@ class UnifiedRegisterSerializer(serializers.Serializer):
     
     def create(self, validated_data):
         role = validated_data.pop('role')
+        accepted_terms = validated_data.pop('accepted_terms', False)
         
         if role == 'student':
             # Use existing student registration logic
             student_data = {
                 'name': validated_data['name'],
                 'email': validated_data['email'],
-                'password': validated_data['password']
+                'password': validated_data['password'],
+                'accepted_terms': accepted_terms,
             }
             student_serializer = StudentRegistrationSerializer(data=student_data)
             student_serializer.is_valid(raise_exception=True)
@@ -83,7 +86,8 @@ class UnifiedRegisterSerializer(serializers.Serializer):
             mentor_data = {
                 'name': validated_data['name'],
                 'email': validated_data['email'],
-                'password': validated_data['password']
+                'password': validated_data['password'],
+                'accepted_terms': accepted_terms,
             }
             mentor_serializer = MentorRegistrationSerializer(data=mentor_data)
             mentor_serializer.is_valid(raise_exception=True)
