@@ -70,7 +70,7 @@ class SkillSerializer(serializers.ModelSerializer):
         skill, _ = Skill.objects.get_or_create(name=name)
         return skill
 
-# Serializer for Profession
+
 class ProfessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profession
@@ -116,25 +116,25 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = ('student_id', 'email', 'name','details','meetings','messages')
 
     def get_meetings(self, obj):
-        # Return all meetings for the student, ordered by scheduled time
+        
         all_meetings = obj.mentor_meetings.all().order_by('scheduled_time')
         return MeetingSerializer(all_meetings, many=True).data
     
 
     def get_messages(self, obj):
-        # ✅ Assuming messages are sent *to* student (i.e., received messages)
-        student_messages = obj.received_messages.all().order_by('-sent_at')  # uses related_name='messages'
+        
+        student_messages = obj.received_messages.all().order_by('-sent_at')
         return StudentMessageSerializer(student_messages, many=True).data
 
     def update(self, instance, validated_data):
         details_data = validated_data.pop('details', {})
 
-        # Update student fields (name, email, etc.)
+        
         for attr, value in validated_data.items():
             setattr(instance, attr, value)
         instance.save()
 
-        # Update StudentDetails fields
+        
         student_details = getattr(instance, 'details', None)
         if not student_details:
             from student.models import StudentDetail
@@ -142,12 +142,12 @@ class StudentSerializer(serializers.ModelSerializer):
         skills_data = details_data.pop('skills', [])
         professions_data = details_data.pop('professions', [])
 
-        # Update simple fields
+        
         for attr, value in details_data.items():
             setattr(student_details, attr, value)
         student_details.save()
 
-        # Update ManyToMany: skills and professions
+        
         if skills_data:
             skill_objs = []
             for skill in skills_data:
@@ -219,7 +219,7 @@ class BookingSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         request = self.context.get('request')
-        student = request.user  # If user is linked via OneToOneField in Student
+        student = request.user 
 
         mentor_id = validated_data.pop('mentor_id')
         from mentor.models import Mentor
@@ -286,7 +286,7 @@ class FeedbackSerializer(serializers.ModelSerializer):
             except Meeting.DoesNotExist:
                 raise serializers.ValidationError({'meeting_id': 'Meeting not found'})
 
-        # Prevent duplicate feedback for the same student and meeting
+        
         student = self.context['request'].user
         meeting = data.get('meeting')
         if meeting:
