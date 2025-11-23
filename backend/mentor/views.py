@@ -19,7 +19,6 @@ from .serializers import PublicMentorSerializer
 from rest_framework.authentication import TokenAuthentication as DRFTokenAuthentication
 from rest_framework.authentication import get_authorization_header
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from django.db.models import Q
 from rest_framework import generics
 from rest_framework.permissions import AllowAny
 from rest_framework.pagination import PageNumberPagination
@@ -70,7 +69,7 @@ def extract_supabase_path(url):
 
 class MentorTokenAuthentication(BaseAuthentication):
     def authenticate(self, request):
-        # print("🚨 HEADERS:", request.headers)
+        
         auth_header = request.headers.get('Authorization')
         
         if not auth_header or not auth_header.startswith('Token '):

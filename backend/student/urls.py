@@ -23,4 +23,4 @@ urlpatterns = [
     path('feedback/<int:pk>/', views.FeedbackDetailAPIView.as_view(), name='feedback-detail'),
     path('feedback/mentor/<str:mentor_id>/', views.MentorFeedbackListAPIView.as_view(), name='mentor-feedback-list'),
     path('feedback/check/<str:meeting_id>/', views.CheckFeedbackExistsAPIView.as_view(), name='check-feedback-exists'),
-]
+] 

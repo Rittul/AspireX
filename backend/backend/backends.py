@@ -1,4 +1,3 @@
-# your_app/authentication.py
 from django.contrib.auth.backends import BaseBackend
 from student.models import Student
 from mentor.models import Mentor, MentorToken

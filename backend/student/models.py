@@ -121,10 +121,10 @@ class StudentDetail(models.Model):
         Student, 
         on_delete=models.CASCADE,
         related_name='details',
-        primary_key=True  # This makes the student_id the primary key of StudentDetail
+        primary_key=True 
     )
     
-    # Add Details     
+    
     first_name = models.CharField(max_length=200, default="", blank=True)
     last_name = models.CharField(max_length=200, default="", blank=True)
     dob = models.DateField(null=True, blank=True, default=None)

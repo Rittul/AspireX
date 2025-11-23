@@ -68,7 +68,7 @@ def newsletter_subscribe(request):
             validate_email(email)
         except (json.JSONDecodeError, KeyError, ValidationError):
             return JsonResponse({'success': False, 'message': 'Invalid email.'}, status=400)
-        # Save to DB if not already subscribed
+
         if NewsletterSubscriber.objects.filter(email=email).exists():
             return JsonResponse({'success': True, 'message': 'Already subscribed.'})
         NewsletterSubscriber.objects.create(email=email)

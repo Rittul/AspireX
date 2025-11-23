@@ -14,7 +14,6 @@ import uuid
 from django.db import models
 from django.conf import settings
 from django.contrib.auth import get_user_model
-# Remove DAILY_API_KEY, create_daily_room, and requests import
 
 
 class MentorManager(BaseUserManager):
