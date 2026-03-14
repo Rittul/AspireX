@@ -967,6 +967,8 @@ This project is proprietary and confidential. All rights reserved.
 ## 👥 Team
 
 - **Developer**: Harsh Chauhan ([@harshchauhan01](https://github.com/harshchauhan01))
+- **Developer**: Rittul Raj ([@Rittul](https://github.com/Rittul))
+- **Developer**: Abhinav Gupta ([@Abhinavgupta2025](https://github.com/Abhinavgupta2025))
 
 ---
 
